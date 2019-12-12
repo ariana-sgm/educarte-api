@@ -2,6 +2,8 @@ package com.educarte.model;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name="Estudiante")
 public class Estudiante {
         @Id
         @Column(name= "id_estudiante")
