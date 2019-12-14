@@ -12,6 +12,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+import static springfox.documentation.builders.PathSelectors.regex;
+
 //https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
 //Parte de Integrar Swagger al proyecto
 //Java Configuration
@@ -21,13 +23,12 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    //regex("/api.*")
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .paths(regex("/api.*")) //(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
     }

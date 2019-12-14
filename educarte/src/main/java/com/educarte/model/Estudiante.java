@@ -1,81 +1,67 @@
 package com.educarte.model;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name="Estudiante")
 public class Estudiante {
-        @Id
-        @Column(name= "id_estudiante")
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-        @Column(name= "nombre", nullable = false)
-        //@NotBlank(message = "Name is mandatory")
-        private String nombre;
 
-        @Column(name = "apellido", nullable = false)
-        //@NotBlank(message = "Password is mandatory")
-        private  String apellido;
+    @Id
+    @Column(name = "id_estudiante")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idEstudiante;
 
-        @Column(name = "id_materia", nullable = false)
-        //@NotBlank(message = "Password is mandatory")
-        private Long id_materia;
+    @Column(name = "nombre_estudiante", nullable = false)
+    private String nombreEstudiante;
 
-        @Column(name = "id_curso", nullable = false)
-        //@NotBlank(message = "Password is mandatory")
-        private  Long id_curso;
+    @Column(name = "apellido_estudiante", nullable = false)
+    private String apellidoEstudiante;
 
-        @Column(name = "id_login", nullable = false)
-        //@NotBlank(message = "Password is mandatory")
-        private  Long id_login;
+    @ManyToOne
+    @JoinColumn(name = "id_curso", updatable = false, nullable = false)
+    private Curso curso;
 
+    @OneToOne
+    @JoinColumn(name = "id_login", updatable = false, nullable = false)
+    private Login login;
 
-        public Long getId() {
-            return id;
-        }
+    public Long getIdEstudiante() {
+        return idEstudiante;
+    }
 
-        public void setId(Long id) {
-            this.id = id;
-        }
+    public void setIdEstudiante(Long idEstudiante) {
+        this.idEstudiante = idEstudiante;
+    }
 
-        public String getNombre() {
-            return nombre;
-        }
+    public String getNombreEstudiante() {
+        return nombreEstudiante;
+    }
 
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
+    public void setNombreEstudiante(String nombreEstudiante) {
+        this.nombreEstudiante = nombreEstudiante;
+    }
 
-        public String getApellido() {
-            return apellido;
-        }
+    public String getApellidoEstudiante() {
+        return apellidoEstudiante;
+    }
 
-        public void setApellido(String apellido) {
-            this.apellido = apellido;
-        }
+    public void setApellidoEstudiante(String apellidoEstudiante) {
+        this.apellidoEstudiante = apellidoEstudiante;
+    }
 
-        public Long getId_materia() {
-            return id_materia;
-        }
+    public Login getLogin() {
+        return login;
+    }
 
-        public void setId_materia(Long id_materia) {
-            this.id_materia = id_materia;
-        }
+    public void setLogin(Login login) {
+        this.login = login;
+    }
 
-        public Long getId_curso() {
-            return id_curso;
-        }
+    public Curso getCurso() {
+        return curso;
+    }
 
-        public void setId_curso(Long id_curso) {
-            this.id_curso = id_curso;
-        }
-
-        public Long getId_login() {
-            return id_login;
-        }
-
-        public void setId_login(Long id_login) {
-            this.id_login = id_login;
-        }
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 }
+

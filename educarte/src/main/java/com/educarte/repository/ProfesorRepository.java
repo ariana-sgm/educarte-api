@@ -1,4 +1,8 @@
 package com.educarte.repository;
 
-public interface ProfesorRepository {
+import com.educarte.model.Profesor;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ProfesorRepository extends CrudRepository<Profesor, Long> {
+    Profesor findByIdLogin(Long idLogin);
 }

@@ -1,5 +1,8 @@
 package com.educarte.implement;
 
+import com.educarte.dto.ReqLoginDto;
+import com.educarte.dto.ResponseLoginDto;
+import com.educarte.mapping.MappingLogin;
 import com.educarte.model.Login;
 import com.educarte.repository.LoginRepository;
 import com.educarte.service.ILoginService;
@@ -14,27 +17,53 @@ public class LoginImp implements ILoginService {
     @Autowired
     private LoginRepository loginRepository;
 
+    @Autowired
+    private MappingLogin mappingLogin;
+
     @Override
-    public Login saveLogin(Login login) {
-        Login loginLocal = null;
+    public ResponseLoginDto saveLogin(ReqLoginDto login) {
+        ResponseLoginDto responseLoginDto;
+        Login loginLocal = new Login();
+        loginLocal.setEmail(login.getEmailDto());
+        loginLocal.setPassword(login.getPasswordDto());
         try{
-            loginLocal = loginRepository.save(login);
+
+            loginLocal = loginRepository.save(loginLocal);
         } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        responseLoginDto = mappingLogin.transformarLoginToResponseDto(loginLocal);
+
+        return responseLoginDto;
+    }
+
+    @Override
+    public Login findById(Long id) {
+        Login loginLocal = new Login();
+        try{
+            loginLocal = mappingLogin.transformarOptionaLogin(loginRepository.findById(id));
+            if(null == loginLocal){
+               return null;
+            }
+        }catch (Exception ex){
             ex.printStackTrace();
         }
         return loginLocal;
     }
 
     @Override
-    public Login findById(Long id) {
+    public boolean findByEmail(String email) {
+        boolean existUser = false;
         Login loginLocal = null;
         try{
-            //loginLocal
-        } catch (Exception ex){
+            loginLocal = loginRepository.findByEmail(email);
+            if(null != loginLocal){
+                existUser = true;
+            }
+        }catch(Exception ex){
             ex.printStackTrace();
         }
-
-        return loginLocal;
+        return existUser;
     }
 
     @Override

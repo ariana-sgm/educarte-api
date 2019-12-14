@@ -7,49 +7,47 @@ public class Profesor {
     @Id
     @Column(name= "id_profesor")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idProfesor;
 
-    @Column(name= "nombre", nullable = false)
-    //@NotBlank(message = "Name is mandatory")
-    private String nombre;
+    @Column(name= "nombre_profesor", nullable = false)
+    private String nombreProfesor;
 
-    @Column(name = "apellido", nullable = false)
-    //@NotBlank(message = "Password is mandatory")
-    private  String apellido;
+    @Column(name = "apellido_profesor", nullable = false)
+    private  String apellidoProfesor;
 
-    @Column(name = "id_login", nullable = false)
-    //@NotBlank(message = "Password is mandatory")
-    private  Long id_login;
+    @OneToOne
+    @JoinColumn(name = "id_login", updatable = false, nullable = false)
+    private Login idLogin;
 
-    public Long getId() {
-        return id;
+    public Long getIdProfesor() {
+        return idProfesor;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdProfesor(Long idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreProfesor() {
+        return nombreProfesor;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreProfesor(String nombreProfesor) {
+        this.nombreProfesor = nombreProfesor;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getApellidoProfesor() {
+        return apellidoProfesor;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellidoProfesor(String apellidoProfesor) {
+        this.apellidoProfesor = apellidoProfesor;
     }
 
-    public Long getId_login() {
-        return id_login;
+    public Login getIdLogin() {
+        return idLogin;
     }
 
-    public void setId_login(Long id_login) {
-        this.id_login = id_login;
+    public void setIdLogin(Login idLogin) {
+        this.idLogin = idLogin;
     }
 }

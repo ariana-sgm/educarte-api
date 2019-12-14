@@ -1,13 +1,9 @@
 package com.educarte.model;
-
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 //Anotacion de persistencia a jpa, declara que es una entidad
-@Entity
 //nombre de la tabla
+@Entity
 @Table(name="Login")
 public class Login {
 
@@ -15,23 +11,20 @@ public class Login {
     @Id
     @Column(name= "id_login")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idLogin;
 
     @Column(name= "email", unique = true, nullable = false)
-    //@NotBlank(message = "Email is mandatory")
     private String email;
 
     @Column(name = "password", nullable = false)
-    //@NotBlank(message = "Password is mandatory")
     private  String password;
 
-
-    public Long getId() {
-        return id;
+    public Long getIdLogin() {
+        return idLogin;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdLogin(Long idLogin) {
+        this.idLogin = idLogin;
     }
 
     public String getEmail() {

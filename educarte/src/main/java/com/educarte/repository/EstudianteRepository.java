@@ -1,4 +1,7 @@
 package com.educarte.repository;
 
-public interface EstudianteRepository {
+import com.educarte.model.Estudiante;
+import org.springframework.data.repository.CrudRepository;
+
+public interface EstudianteRepository extends CrudRepository<Estudiante, Long> {
 }

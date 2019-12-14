@@ -1,10 +1,13 @@
 package com.educarte.service;
 
+import com.educarte.dto.ReqLoginDto;
+import com.educarte.dto.ResponseLoginDto;
 import com.educarte.model.Login;
 
 public interface ILoginService {
 
-    Login saveLogin(Login login);
-    Login findById(Long id);
+    ResponseLoginDto saveLogin(ReqLoginDto login);
+    Login findById (Long Id);
+    boolean findByEmail (String email);
     boolean findByEmailAndPassword(String email, String password);
 }

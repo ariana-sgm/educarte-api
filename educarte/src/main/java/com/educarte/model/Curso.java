@@ -1,4 +1,6 @@
 package com.educarte.model;
+import org.springframework.context.annotation.EnableMBeanExport;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,37 +9,37 @@ public class Curso {
     @Id
     @Column(name= "id_curso")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCurso;
 
-    @Column(name= "nombre", unique = true, nullable = false)
-    //@NotBlank(message = "Name is mandatory")
-    private String nombre;
+    @Column(name= "nombre_curso", nullable = false)
+    private String nombreCurso;
 
-    @Column(name = "id_profesor", nullable = false)
-    //@NotBlank(message = "id_profesor is mandatory")
-    private  Long id_profesor;
+    @ManyToOne
+    @JoinColumn(name = "id_profesor", updatable = false, nullable = false)
+    private Profesor profesor;
 
-    public Long getId() {
-        return id;
+    public Long getIdCurso() {
+        return idCurso;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdCurso(Long idCurso) {
+        this.idCurso = idCurso;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreCurso() {
+        return nombreCurso;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreCurso(String nombreCurso) {
+        this.nombreCurso = nombreCurso;
     }
 
-    public Long getId_profesor() {
-        return id_profesor;
+    public Profesor getProfesor() {
+        return profesor;
     }
 
-    public void setId_profesor(Long id_profesor) {
-        this.id_profesor = id_profesor;
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
     }
+
 }
