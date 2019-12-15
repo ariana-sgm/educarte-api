@@ -5,13 +5,13 @@ import com.educarte.model.Curso;
 import java.util.List;
 
 public class ResponseCursoProfesorDto {
-    private List <List<String>>listaCursosProfesor;
+    private List <ResponseCursoInfoDto>listaCursosProfesor;
 
-    public List<List<String>> getListaCursosProfesor() {
+    public List<ResponseCursoInfoDto> getListaCursosProfesor() {
         return listaCursosProfesor;
     }
 
-    public void setListaCursosProfesor(List<List<String>> listaCursosProfesor) {
+    public void setListaCursosProfesor(List<ResponseCursoInfoDto> listaCursosProfesor) {
         this.listaCursosProfesor = listaCursosProfesor;
     }
 }

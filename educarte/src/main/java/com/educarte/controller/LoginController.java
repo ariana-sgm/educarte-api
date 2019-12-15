@@ -1,14 +1,12 @@
 package com.educarte.controller;
 
-import com.educarte.dto.ReqLoginDto;
-import com.educarte.dto.ReqProfesorDto;
-import com.educarte.dto.ReqRegisterDto;
-import com.educarte.dto.ResponseLoginDto;
+import com.educarte.dto.*;
 import com.educarte.exception.MyException;
 import com.educarte.implement.LoginImp;
 import com.educarte.implement.ProfesorImp;
 import com.educarte.model.Login;
 import com.educarte.model.Profesor;
+import com.educarte.requestValidation.ReqRegisterDtoValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +21,9 @@ public class LoginController {
     @Autowired
     private ProfesorImp profesorImp;
 
+    @Autowired
+    private ReqRegisterDtoValidation validation;
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseLoginDto saveLogin(@RequestBody ReqLoginDto log){
         ResponseLoginDto loginController = new ResponseLoginDto();
@@ -34,20 +35,36 @@ public class LoginController {
         return loginController;
     }
 
-    @RequestMapping(value = "/sessions", method = RequestMethod.POST)
-    public boolean validateLogin(@RequestBody ReqLoginDto loginDto){
-        boolean loginController = false;
+    @RequestMapping(value = "/sessions/profesor", method = RequestMethod.POST)
+    public ResponseProfesorDto validateLoginProfesor(@RequestBody ReqLoginDto loginDto){
+        ResponseProfesorDto loginController = new ResponseProfesorDto();
         try {
             loginController = loginImp.findByEmailAndPassword(loginDto.getEmailDto(), loginDto.getPasswordDto());
         } catch (Exception ex){
             ex.printStackTrace();
+            return null;
         }
         return loginController;
     }
 
+    @RequestMapping(value = "/sessions/estudiante", method = RequestMethod.POST)
+    public ResponseProfesorDto validateLoginEstudiante(@RequestBody ReqLoginDto loginDto){
+        ResponseProfesorDto loginController = new ResponseProfesorDto();
+        try {
+            loginController = loginImp.findByEmailAndPassword(loginDto.getEmailDto(), loginDto.getPasswordDto());
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+        return loginController;
+    }
+
+
+
     @RequestMapping(value = "/registrations", method = RequestMethod.POST)
     public boolean registration(@RequestBody ReqRegisterDto registerDto) throws MyException{
-        if(loginImp.findByEmail(registerDto.getEmailDto()) ){
+        if(!validation.isValidReqRegisterDto(registerDto)) return false;
+        if(loginImp.findByEmail(registerDto.getEmailDto())){
             return false;
         }
 
@@ -60,18 +77,21 @@ public class LoginController {
             loginLocal = loginImp.saveLogin(loginDto);
         } catch (Exception ex){
             ex.printStackTrace();
+            return false;
         }
 
 
         ReqProfesorDto profesorDto= new ReqProfesorDto();
+        ResponseProfesorDto response = new ResponseProfesorDto();
         profesorDto.setApellidoProfesorDto(registerDto.getApellidoProfesorDto());
         profesorDto.setIdLoginDto(loginLocal.getIdLoginDto());
         profesorDto.setNombreProfesorDto(registerDto.getNombreProfesorDto());
-        Profesor profesorLocal = new Profesor();
         try{
-            profesorLocal = profesorImp.saveProfesor(profesorDto);
+            response = profesorImp.saveProfesor(profesorDto);
+
         } catch (Exception ex){
             ex.printStackTrace();
+            return false;
         }
         return true;
     }

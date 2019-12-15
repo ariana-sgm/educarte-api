@@ -2,6 +2,7 @@ package com.educarte.service;
 
 import com.educarte.dto.ReqLoginDto;
 import com.educarte.dto.ResponseLoginDto;
+import com.educarte.dto.ResponseProfesorDto;
 import com.educarte.model.Login;
 
 public interface ILoginService {
@@ -9,5 +10,5 @@ public interface ILoginService {
     ResponseLoginDto saveLogin(ReqLoginDto login);
     Login findById (Long Id);
     boolean findByEmail (String email);
-    boolean findByEmailAndPassword(String email, String password);
+    ResponseProfesorDto findByEmailAndPassword(String email, String password);
 }

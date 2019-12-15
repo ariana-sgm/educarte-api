@@ -2,6 +2,8 @@ package com.educarte.controller;
 
 import com.educarte.dto.ReqLoginDto;
 import com.educarte.dto.ReqProfesorDto;
+import com.educarte.dto.ResponseLoginDto;
+import com.educarte.dto.ResponseProfesorDto;
 import com.educarte.implement.LoginImp;
 import com.educarte.implement.ProfesorImp;
 import com.educarte.model.Login;
@@ -21,15 +23,26 @@ public class ProfesorController {
     private LoginImp loginImp;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Profesor saveProfesor(@RequestBody ReqProfesorDto profesorDto) {
+    public ResponseProfesorDto saveProfesor(@RequestBody ReqProfesorDto profesorDto) {
         ReqProfesorDto profesor = profesorDto;
-        Profesor profesorController = new Profesor();
+        ResponseProfesorDto response = new ResponseProfesorDto();
         try {
-            profesorController = profesorImp.saveProfesor(profesor);
+            response = profesorImp.saveProfesor(profesor);
         } catch (Exception ex){
             ex.printStackTrace();
         }
-        return profesorController;
+        return response;
     }
 
+    @RequestMapping(value = "/finds", method = RequestMethod.GET)
+    public ResponseProfesorDto findByIdLogin(@RequestBody ReqLoginDto reqLoginDto) {
+        ResponseProfesorDto responseProfesorDto = new ResponseProfesorDto();
+        try {
+            responseProfesorDto = loginImp.findByEmailAndPassword(reqLoginDto.getEmailDto(), reqLoginDto.getPasswordDto());
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return responseProfesorDto;
+    }
 }

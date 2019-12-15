@@ -1,9 +1,9 @@
 package com.educarte.controller;
 
-import com.educarte.dto.ReqLoginDto;
-import com.educarte.dto.ResponseCursoProfesorDto;
+import com.educarte.dto.*;
 import com.educarte.implement.CursoImp;
 import com.educarte.model.Curso;
+import com.educarte.model.Profesor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +18,40 @@ public class CursoController {
     @Autowired
     private CursoImp cursoImp;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseCursoProfesorDto listarCursosProfesor(@RequestBody Long idProfesor){
-        List<Curso> listaCursosProfesor = new ArrayList<>();
-        List<List<String>> listaNombreId = new ArrayList<>();
+    @RequestMapping(value ="/guardados", method = RequestMethod.POST)
+    public ResponseCursoProfesorDto saveCurso(@RequestBody ReqCursoDto cursoDto){
+        Curso cursoController = new Curso();
+        try{
+            cursoController = cursoImp.saveCurso(cursoDto);
+            if (cursoController == null) return null;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+        return cursoImp.listarCursosProfesor(cursoController.getProfesor().getIdProfesor());
+    }
+
+    @RequestMapping(value = "/listas/{idProfesor}", method = RequestMethod.GET)
+    public ResponseCursoProfesorDto listarCursosProfesor(@PathVariable Long idProfesor){
+        ResponseCursoProfesorDto response = new ResponseCursoProfesorDto();
         try {
-            listaCursosProfesor = cursoImp.findByIdProfesor(idProfesor);
+            response = cursoImp.listarCursosProfesor(idProfesor);
         } catch (Exception ex){
             ex.printStackTrace();
         }
-        for(Curso curso : listaCursosProfesor){
-            List <String> listaPorCurso = new ArrayList<>();
-            listaPorCurso.add(curso.getNombreCurso());
-            listaPorCurso.add(curso.getIdCurso().toString());
-            listaNombreId.add(listaPorCurso);
-        }
-        ResponseCursoProfesorDto response = new ResponseCursoProfesorDto();
-        response.setListaCursosProfesor(listaNombreId);
         return response;
+    }
+
+    @RequestMapping(value = "/deletes/{idCurso}", method = RequestMethod.GET)
+    public ResponseCursoProfesorDto deleteCurso(@PathVariable Long idCurso){
+        Profesor profesor = cursoImp.findById(idCurso).getProfesor();
+        try{
+            boolean eliminado = cursoImp.eliminarCurso(idCurso);
+            if (!eliminado) return null;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+        return cursoImp.listarCursosProfesor(profesor.getIdProfesor());
     }
 }

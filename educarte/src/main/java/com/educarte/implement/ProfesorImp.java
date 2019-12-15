@@ -1,6 +1,7 @@
 package com.educarte.implement;
 
 import com.educarte.dto.ReqProfesorDto;
+import com.educarte.dto.ResponseProfesorDto;
 import com.educarte.mapping.MappingLogin;
 import com.educarte.mapping.MappingProfesor;
 import com.educarte.model.Login;
@@ -8,6 +9,7 @@ import com.educarte.model.Profesor;
 import com.educarte.repository.LoginRepository;
 import com.educarte.repository.ProfesorRepository;
 import com.educarte.service.IProfesorService;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,8 @@ public class ProfesorImp implements IProfesorService {
     private MappingProfesor mappingProfesor;
 
     @Override
-    public Profesor saveProfesor(ReqProfesorDto profesorDto) {
+    public ResponseProfesorDto saveProfesor(ReqProfesorDto profesorDto) {
+        ResponseProfesorDto response = new ResponseProfesorDto();
         Profesor profesorLocal = new Profesor();
         Profesor provisional = new Profesor();
         try{
@@ -40,7 +43,8 @@ public class ProfesorImp implements IProfesorService {
         } catch (Exception ex){
             ex.printStackTrace();
         }
-        return profesorLocal;
+        response = mappingProfesor.transformarProfesorResponseDto(profesorLocal);
+        return response;
     }
 
     @Override
@@ -53,18 +57,21 @@ public class ProfesorImp implements IProfesorService {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+            return null;
         }
         return profesor;
     }
 
     @Override
-    public Profesor findByIdLogin(Long idLogin) {
-        Profesor profesorLocal = null;
+    public ResponseProfesorDto findByIdLogin(Login idLogin) {
+        ResponseProfesorDto response = new ResponseProfesorDto();
+        Profesor profesorLocal = new Profesor();
         try{
             profesorLocal = profesorRepository.findByIdLogin(idLogin);
         }catch(Exception ex){
             ex.printStackTrace();
+            return null;
         }
-        return profesorLocal;
+        return response = mappingProfesor.transformarProfesorResponseDto(profesorLocal);
     }
 }
