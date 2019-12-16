@@ -1,13 +1,19 @@
 package com.educarte.controller;
 
 import com.educarte.dto.*;
+import com.educarte.implement.CursoImp;
+import com.educarte.implement.EstudianteImp;
 import com.educarte.implement.MateriaImp;
+import com.educarte.implement.NotasImp;
 import com.educarte.mapping.MappingMateria;
 import com.educarte.model.Curso;
+import com.educarte.model.Estudiante;
 import com.educarte.model.Materia;
 import com.educarte.model.Profesor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins="*")
@@ -15,10 +21,19 @@ import org.springframework.web.bind.annotation.*;
 public class MateriaController {
 
     @Autowired
-    MateriaImp materiaImp;
+    private MateriaImp materiaImp;
 
     @Autowired
-    MappingMateria mappingMateria;
+    private MappingMateria mappingMateria;
+
+    @Autowired
+    private NotasImp notasImp;
+
+    @Autowired
+    private CursoImp cursoImp;
+
+    @Autowired
+    private EstudianteImp estudianteImp;
 
     @RequestMapping(value ="/guardadas", method = RequestMethod.POST)
     public ResponseMateriaCursoDto saveMateria(@RequestBody ReqMateriaDto materiaDto){
@@ -31,7 +46,19 @@ public class MateriaController {
             return null;
         }
         Curso curso = materiaController.getCurso();
-        return materiaImp.listarMateriasCurso(curso.getIdCurso());
+        ResponseMateriaCursoDto response = materiaImp.listarMateriasCurso(curso.getIdCurso());
+        ReqNotasDto requestNotas = new ReqNotasDto();
+        List<Estudiante> listaEstudiantes = estudianteImp.findByIdCurso(curso.getIdCurso());
+        try {
+            for (Estudiante estudiante : listaEstudiantes) {
+                requestNotas.setIdMateria(materiaController.getIdMateria());
+                requestNotas.setIdEstudiante(estudiante.getIdEstudiante());
+                notasImp.saveNotas(requestNotas);
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return response;
     }
 
     @RequestMapping(value = "/listas/{idCurso}", method = RequestMethod.GET)

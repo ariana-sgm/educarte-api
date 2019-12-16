@@ -28,13 +28,13 @@ public class MateriaImp implements IMateriaService {
 
     @Override
     public List<Materia> findByIdCurso(Long idCurso) {
-        List <Materia> listaMateriasProfesor = new ArrayList<Materia>();
+        List <Materia> listaMateriasCurso = new ArrayList<Materia>();
         try{
-            listaMateriasProfesor = materiaRepository.findByCurso_IdCurso(idCurso);
+            listaMateriasCurso = materiaRepository.findByCurso_IdCurso(idCurso);
         } catch (Exception ex){
             ex.printStackTrace();
         }
-        return listaMateriasProfesor;
+        return listaMateriasCurso;
     }
 
     @Override

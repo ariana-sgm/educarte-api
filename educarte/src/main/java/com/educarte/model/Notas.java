@@ -43,5 +43,93 @@ public class Notas {
 
     @Column(name= "control4")
     private float control4;
+
+    public Long getIdNotas() {
+        return idNotas;
+    }
+
+    public void setIdNotas(Long idNotas) {
+        this.idNotas = idNotas;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
+    }
+
+    public float getNota1() {
+        return nota1;
+    }
+
+    public void setNota1(float nota1) {
+        this.nota1 = nota1;
+    }
+
+    public float getNota2() {
+        return nota2;
+    }
+
+    public void setNota2(float nota2) {
+        this.nota2 = nota2;
+    }
+
+    public float getNota3() {
+        return nota3;
+    }
+
+    public void setNota3(float nota3) {
+        this.nota3 = nota3;
+    }
+
+    public float getNota4() {
+        return nota4;
+    }
+
+    public void setNota4(float nota4) {
+        this.nota4 = nota4;
+    }
+
+    public float getControl1() {
+        return control1;
+    }
+
+    public void setControl1(float control1) {
+        this.control1 = control1;
+    }
+
+    public float getControl2() {
+        return control2;
+    }
+
+    public void setControl2(float control2) {
+        this.control2 = control2;
+    }
+
+    public float getControl3() {
+        return control3;
+    }
+
+    public void setControl3(float control3) {
+        this.control3 = control3;
+    }
+
+    public float getControl4() {
+        return control4;
+    }
+
+    public void setControl4(float control4) {
+        this.control4 = control4;
+    }
 }
 

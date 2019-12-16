@@ -18,8 +18,8 @@ public class MappingMateria {
             if(materiaOptional.isPresent()){
                 materia = new Materia();
                 materia.setIdMateria(materiaOptional.get().getIdMateria());
-                    materia.setNombreMateria(materiaOptional.get().getNombreMateria());
-                    materia.setCurso(materiaOptional.get().getCurso());
+                materia.setNombreMateria(materiaOptional.get().getNombreMateria());
+                materia.setCurso(materiaOptional.get().getCurso());
             }
         }catch (Exception ex){
             ex.printStackTrace();

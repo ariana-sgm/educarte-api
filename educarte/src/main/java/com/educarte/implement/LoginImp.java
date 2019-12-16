@@ -1,6 +1,7 @@
 package com.educarte.implement;
 
 import com.educarte.dto.ReqLoginDto;
+import com.educarte.dto.ResponseEstudianteDto;
 import com.educarte.dto.ResponseLoginDto;
 import com.educarte.dto.ResponseProfesorDto;
 import com.educarte.mapping.MappingLogin;
@@ -22,7 +23,10 @@ public class LoginImp implements ILoginService {
     private MappingLogin mappingLogin;
 
     @Autowired
-    ProfesorImp profesorImp;
+    private ProfesorImp profesorImp;
+
+    @Autowired
+    private EstudianteImp estudianteImp;
 
     @Override
     public ResponseLoginDto saveLogin(ReqLoginDto login) {
@@ -51,6 +55,7 @@ public class LoginImp implements ILoginService {
             }
         }catch (Exception ex){
             ex.printStackTrace();
+            return null;
         }
         return loginLocal;
     }
@@ -83,5 +88,20 @@ public class LoginImp implements ILoginService {
             ex.printStackTrace();
         }
         return responseProfesorDto;
+    }
+
+    @Override
+    public ResponseEstudianteDto findEstByEmailAndPassword(String email, String password) {
+        ResponseEstudianteDto responseEstudianteDto = null;
+        Login loginLocal = null;
+        try{
+            loginLocal = loginRepository.findByEmailAndPassword(email, password);
+            if(null != loginLocal){
+                responseEstudianteDto = estudianteImp.findByIdLogin(loginLocal);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return responseEstudianteDto;
     }
 }

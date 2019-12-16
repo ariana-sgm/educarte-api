@@ -19,6 +19,7 @@ public class MappingEstudiante {
             response.setNombreDto(estudiante.getNombreEstudiante());
             response.setIdEstudiante(estudiante.getIdEstudiante());
             response.setIdCurso(estudiante.getCurso().getIdCurso());
+            response.setEmailDto(estudiante.getLogin().getEmail());
         } catch (Exception ex){
             ex.printStackTrace();
         }

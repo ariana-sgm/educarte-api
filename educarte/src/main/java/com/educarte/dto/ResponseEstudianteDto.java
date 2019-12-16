@@ -6,6 +6,15 @@ public class ResponseEstudianteDto {
     private Long idLogin;
     private Long idEstudiante;
     private Long idCurso;
+    private String emailDto;
+
+    public String getEmailDto() {
+        return emailDto;
+    }
+
+    public void setEmailDto(String emailDto) {
+        this.emailDto = emailDto;
+    }
 
     public String getNombreDto() {
         return nombreDto;

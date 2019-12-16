@@ -68,11 +68,13 @@ public class CursoImp implements ICursoService {
             cursoLocal.setProfesor(profesorCurso);
         } catch (Exception ex){
             ex.printStackTrace();
+            return null;
         }
         try {
             cursoLocal = cursoRepository.save(cursoLocal);
         } catch (Exception ex){
             ex.printStackTrace();
+            return null;
         }
         return cursoLocal;
     }
